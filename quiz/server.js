@@ -29,8 +29,17 @@ app.use(
   cors({origin: 'http://localhost:3000'})
 );
 app.use('/read/usernames', addMsgToRequest);
+app.use('/read/usernames/:name', addMsgToRequest);
+
 
 app.get('/read/usernames', (req, res) => {
+  let usernames = req.users.map(function(user) {
+    return {id: user.id, username: user.username};
+  });
+  res.send(usernames);
+});
+
+app.get('/read/usernames/:name', (req, res) => {
   let usernames = req.users.map(function(user) {
     return {id: user.id, username: user.username};
   });
